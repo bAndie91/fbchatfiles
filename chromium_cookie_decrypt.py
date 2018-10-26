@@ -18,7 +18,11 @@ while True:
 	
 	field_number_to_decrypt = int(sys.argv[1])
 	fields = record.split()
-	encrypted_value = binascii.unhexlify(fields[field_number_to_decrypt])
+	try:
+		encrypted_value = binascii.unhexlify(fields[field_number_to_decrypt])
+	except IndexError as e:
+		print '\t'.join(fields)
+		continue
 	
 	# Trim off the 'v10' that Chrome/ium prepends
 	encrypted_value = encrypted_value[3:]
