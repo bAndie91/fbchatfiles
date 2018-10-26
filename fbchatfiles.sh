@@ -117,10 +117,14 @@ report_forbidden_url()
 	mv "$FBCHATFILES_STATE".new "$FBCHATFILES_STATE"
 }
 
+is_empty_dir()
+{
+	[ "$(cd "$1" && find . -maxdepth 0 -empty)" = . ]
+}
 
 
 
-if [ "$(find . -maxdepth 0 -empty)" = . -o -e .fbchatfiles ]
+if [ -e .fbchatfiles ] || is_empty_dir .
 then
 	true
 else
@@ -207,14 +211,23 @@ do
 							if [ "$(echo "$url" | cut -d/ -f3,5)" = www.facebook.com/posts ]
 							then
 								# Download potential videos on linked page
-								filename=`youtube-dl --get-filename`
-								if youtube-dl --xattrs "$url"
+								set +e
+								filename=`youtube-dl --get-filename "$url"`
+								err=$?
+								set -e
+								if [ $err = 0 ]
 								then
-									written=true
+									if youtube-dl --xattrs "$url"
+									then
+										written=true
+									else
+										# TODO check exit code
+										report_forbidden_url "$threadID" "$fileID"
+									fi
 								else
-									# TODO check exit code
-									report_forbidden_url "$threadID" "$fileID"
+									echo "Could not download video: $url" >&2
 								fi
+								unset err
 							else
 								ext=url
 								ver=`get_version_max "$filename" "$ext"`
@@ -259,6 +272,7 @@ do
 								errorlevel $err
 								;;
 							esac
+							unset err
 							
 							if [ $written = true ]
 							then
