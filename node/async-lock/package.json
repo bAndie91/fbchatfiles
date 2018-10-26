@@ -1,0 +1,139 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "async-lock",
+        "scope": null,
+        "escapedName": "async-lock",
+        "name": "async-lock",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/home/sysop/devel/net/fb-messenger/fbchatfiles"
+    ]
+  ],
+  "_from": "async-lock@latest",
+  "_id": "async-lock@1.1.2",
+  "_inCache": true,
+  "_location": "/async-lock",
+  "_nodeVersion": "9.6.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/async-lock_1.1.2_1519672870538_0.8228437249335285"
+  },
+  "_npmUser": {
+    "name": "rogierschouten",
+    "email": "rogier.schouten@gmail.com"
+  },
+  "_npmVersion": "5.6.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "async-lock",
+    "scope": null,
+    "escapedName": "async-lock",
+    "name": "async-lock",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/async-lock/-/async-lock-1.1.2.tgz",
+  "_shasum": "d552b3f8fe93018bf917efcf66d3154b9035282a",
+  "_shrinkwrap": null,
+  "_spec": "async-lock",
+  "_where": "/home/sysop/devel/net/fb-messenger/fbchatfiles",
+  "author": {
+    "name": "Rogier Schouten",
+    "email": "github@workingcode.ninja",
+    "url": "https://github.com/rogierschouten/"
+  },
+  "bugs": {
+    "url": "https://github.com/rogierschouten/async-lock/issues"
+  },
+  "contributors": [
+    {
+      "name": "rain1017",
+      "url": "https://github.com/rain1017"
+    },
+    {
+      "name": "JonathanPicques",
+      "url": "https://github.com/JonathanPicques"
+    },
+    {
+      "name": "Rogier Schouten",
+      "url": "https://github.com/rogierschouten"
+    },
+    {
+      "name": "erikvold",
+      "url": "https://github.com/erikvold"
+    },
+    {
+      "name": "Christian Passet",
+      "url": "https://github.com/thePunIssuer"
+    },
+    {
+      "name": "Tanguy Krotoff",
+      "url": "https://github.com/tkrotoff"
+    }
+  ],
+  "dependencies": {},
+  "description": "Lock on asynchronous code",
+  "devDependencies": {
+    "bluebird": "~3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-cli": "~1.2.0",
+    "grunt-contrib-clean": "~1.1.0",
+    "grunt-contrib-jshint": "~1.1.0",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-env": "~0.4.4",
+    "grunt-mocha-test": "~0.13.2",
+    "load-grunt-tasks": "~3.5.2",
+    "lodash": "~4.17.2",
+    "mocha": "^3.2.0",
+    "q": "~1.5.0",
+    "should": "~11.2.1"
+  },
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-TIfjV4wRLybwL0qZgJiKwxxYilYEXUQj2BZoaEpiWnBXb5/zuEtOhVYITu5/NrcPmO2CR+ybOGWrV0u8IHJ2uw==",
+    "shasum": "d552b3f8fe93018bf917efcf66d3154b9035282a",
+    "tarball": "https://registry.npmjs.org/async-lock/-/async-lock-1.1.2.tgz",
+    "fileCount": 7,
+    "unpackedSize": 14486
+  },
+  "engines": {},
+  "gitHead": "e67f0a94c3688296ad871d3e6750c360a3a74126",
+  "homepage": "https://github.com/rogierschouten/async-lock",
+  "keywords": [
+    "lock",
+    "async",
+    "concurrency",
+    "critical",
+    "section",
+    "mutex"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "rogierschouten",
+      "email": "rogier.schouten@gmail.com"
+    }
+  ],
+  "name": "async-lock",
+  "optionalDependencies": {},
+  "private": false,
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogierschouten/async-lock.git"
+  },
+  "scripts": {
+    "postinstall": "",
+    "start": "grunt",
+    "test": "grunt test"
+  },
+  "version": "1.1.2"
+}
