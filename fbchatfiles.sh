@@ -234,7 +234,7 @@ do
 								case $ver in
 								0)
 									filename=$filename.$ext
-								;;
+									;;
 								1)
 									mv "$filename.$ext" "$filename (1).$ext"
 									filename="$filename (2).$ext"

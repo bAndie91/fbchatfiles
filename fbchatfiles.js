@@ -27,7 +27,7 @@ function saveFile(file, content)
 	lock.acquire('save', () => {
 		var tmpfile = file + '~';
 		fs.writeFileSync(tmpfile, content);
-		fs.rename(tmpfile, file);
+		fs.renameSync(tmpfile, file);
 	});
 }
 
