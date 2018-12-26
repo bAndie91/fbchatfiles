@@ -183,6 +183,7 @@ function processThreads(threads, threadIndex, callbackFunction)
 	if(!Globals.state.threads[thread.threadID]) Globals.state.threads[thread.threadID] = {};
 	if(!Globals.state.threads[thread.threadID].done) Globals.state.threads[thread.threadID].done = new Intervals();
 	if(!Globals.state.threads[thread.threadID].file) Globals.state.threads[thread.threadID].file = {};
+	if(!Globals.state.threads[thread.threadID].message_reaction) Globals.state.threads[thread.threadID].message_reaction = {};
 	Globals.state.threads[thread.threadID].conversationName = conversationName;
 	Globals.state.threads[thread.threadID].timestamp = thread.timestamp;
 	
@@ -231,6 +232,7 @@ function processThreadHistory(thread, amount, mostRecentTimestamp, finishCallbac
 							name: name,
 							time: message.timestamp,
 							sender: message.senderID,
+							msgid: message.messageID,
 						};
 						found++;
 						if(attachment.type == 'file')
@@ -276,9 +278,18 @@ function processThreadHistory(thread, amount, mostRecentTimestamp, finishCallbac
 							islink: !attachment.playable,
 							url: url,
 							sender: message.senderID,
+							msgid: message.messageID,
 						};
 						found++;
 					}
+				});
+			}
+			else if(message.type == 'message_reaction')
+			{
+				if(!Globals.state.threads[thread.threadID].message_reaction[message.messageID]) Globals.state.threads[thread.threadID].message_reaction[message.messageID] = [];
+				Globals.state.threads[thread.threadID].message_reaction[message.messageID].push({
+					reactor: message.userID,
+					reaction: message.reaction,
 				});
 			}
 		}
