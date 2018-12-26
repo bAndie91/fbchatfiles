@@ -27,7 +27,7 @@ bytelength()
 	)
 }
 
-shorten()
+list_shorten()
 {
 	local str=$1
 	local max=$2
@@ -40,6 +40,18 @@ shorten()
 		abbrev=" +$n…"
 	done
 	echo "$str$abbrev"
+}
+
+trim_shorten()
+{
+	local str=$1
+	local max=$2
+	local n=0
+	while [ `bytelength "$str"` -gt $max ]
+	do
+		str=${str:0: -1}
+	done
+	echo "$str"
 }
 
 errorlevel()
@@ -65,40 +77,6 @@ get_ext_by_mime()
 			fi
 		done </etc/mime.types
 	fi
-}
-
-get_version_max()
-{
-	local basename=$1
-	local ext=$2
-	
-	{
-		find -maxdepth 1 -name '*.url'
-		awk '{$1=""; print $0}' .files
-	}|\
-	{
-		maxsn=0
-		len=`bytelength "$basename"`
-		
-		while read -r testfilename
-		do
-			left=${testfilename:0:$len}
-			if [ "$left" = "$basename" ]
-			then
-				right=${testfilename:$len}
-				if [ "$right" = "${ext:+.}$ext" ]
-				then
-					[ $maxsn -gt 1 ] || maxsn=1
-				elif [[ $right =~ ^\ \(([0-9]+)\)${ext:+.}$ext$ ]]
-				then
-					sn=${BASH_REMATCH[1]}
-					[ $maxsn -gt $sn ] || maxsn=$sn
-				fi
-			fi
-		done
-		
-		echo $maxsn
-	}
 }
 
 url2basefilename()
@@ -165,7 +143,7 @@ do
 	
 	if [ $numFiles -gt 0 ]
 	then
-		link="$(shorten "$conversationName" $[NAME_MAX - ${#threadID} - 3]) ($threadID)"
+		link="$(list_shorten "$conversationName" $[NAME_MAX - ${#threadID} - 3]) ($threadID)"
 		
 		touch .fbchatfiles
 		[ -d "$dir" ] || mkdir "$dir"
@@ -230,19 +208,23 @@ do
 								unset err
 							else
 								ext=url
-								ver=`get_version_max "$filename" "$ext"`
-								case $ver in
-								0)
-									filename=$filename.$ext
-									;;
-								1)
-									mv "$filename.$ext" "$filename (1).$ext"
-									filename="$filename (2).$ext"
-									;;
-								*)
-									filename="$filename ($[ver+1]).$ext"
-									;;
-								esac
+								filename_0=$filename
+								filename=`trim_shorten "$filename_0" $[NAME_MAX - 4]`.$ext
+								serial=1
+								while [ -e "$filename" ] || cat .files | cut -f2- -d$'\t' | grep -xq "$filename"
+								do
+									if [ $serial = 1 ]
+									then
+										if [ -e "$filename" ]
+										then
+											mv "$filename" "$(trim_shorten "$filename_0" $[NAME_MAX - 8]) (1).$ext"
+										fi
+										serial=$[serial + 1]
+									fi
+									filename="$(trim_shorten "$filename_0" $[NAME_MAX - 4 - ${#serial} - 3]) ($serial).$ext"
+									serial=$[serial + 1]
+								done
+								unset serial filename_0
 								
 								echo "$url" > "$filename"
 								written=true
