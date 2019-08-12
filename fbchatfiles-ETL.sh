@@ -26,8 +26,8 @@ export FBCHATFILES_APISTATE=$statedir/cookies.json
 warnx Testing Facebook login.
 if ! node $libs/login_check.js
 then
-	warnx Facebook login failed. Extracting cookies from Vivaldi.
-	PATH=$libs:$PATH $libs/convert_cookies_chromium_to_nodejs.sh >"$FBCHATFILES_APISTATE"
+	warnx Facebook login failed.
+	exit 13
 fi
 
 export FBCHATFILES_STATE=$statedir/state.json
