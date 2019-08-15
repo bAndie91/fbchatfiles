@@ -24,7 +24,7 @@ set -u
 export FBCHATFILES_APISTATE=$statedir/cookies.json
 
 warnx Testing Facebook login.
-if ! node $libs/login_check.js
+if ! ( unset FACEBOOK_EMAIL FACEBOOK_PASSWORD; node $libs/login_check.js; ) && ! node $libs/login_check.js
 then
 	warnx Facebook login failed.
 	exit 13
