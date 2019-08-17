@@ -4,6 +4,13 @@ const fblogin = require('facebook-chat-api');
 const AsyncLock = require('async-lock');
 const Url = require('url');
 var lock = new AsyncLock();
+var userAgent;
+
+function loadUserAgentString(file)
+{
+	if(fs.existsSync(file))
+		userAgent = fs.readFileSync(file, 'utf8');
+}
 
 function loadJSON(file)
 {
@@ -21,6 +28,7 @@ var Globals = {
 	state: loadJSON(stateFile),
 };
 
+loadUserAgentString(process.env.HOME + "/.local/share/fbchatfiles/user-agent.txt");
 
 function saveFile(file, content)
 {
@@ -326,7 +334,8 @@ for(k in Globals.state.threads)
 }
 
 
-fblogin({appState: apiState, email: process.env.FACEBOOK_EMAIL, password: process.env.FACEBOOK_PASSWORD}, (err, api) => {
+fblogin({appState: apiState, email: process.env.FACEBOOK_EMAIL, password: process.env.FACEBOOK_PASSWORD},
+{userAgent: userAgent}, (err, api) => {
     if(err)
     {
     	console.error(err);
